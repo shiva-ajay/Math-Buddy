@@ -7,7 +7,6 @@ interface RealtimeSession {
 }
 
 export function useVoiceCall() {
-  const store = useVoiceCallStore()
   const pcRef = useRef<RTCPeerConnection | null>(null)
   const dcRef = useRef<RTCDataChannel | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
