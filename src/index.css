@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* ── Surface: deep charcoal with warm undertones ── */
+  --color-surface-0: #09090b;
+  --color-surface-1: #111114;
+  --color-surface-2: #18181c;
+  --color-surface-3: #222228;
+  --color-surface-4: #2c2c34;
+  --color-surface-5: #38383f;
+
+  /* ── Borders ── */
+  --color-border: #25252d;
+  --color-border-subtle: #1c1c22;
+  --color-border-hover: #3a3a44;
+
+  /* ── Text hierarchy ── */
+  --color-text-primary: #ececf0;
+  --color-text-secondary: #a0a0b4;
+  --color-text-tertiary: #606074;
+  --color-text-quaternary: #44444f;
+
+  /* ── Accent: warm amber-gold ── */
+  --color-accent: #c8956c;
+  --color-accent-hover: #d9a87e;
+  --color-accent-dim: #8a6344;
+  --color-accent-muted: rgba(200, 149, 108, 0.08);
+  --color-accent-glow: rgba(200, 149, 108, 0.12);
+
+  /* ── User messages ── */
+  --color-user-bubble: #3b6cf0;
+  --color-user-bubble-hover: #4d7cf7;
+  --color-user-bubble-text: #ffffff;
+
+  /* ── Semantic ── */
+  --color-error: #ef6b6b;
+  --color-error-bg: rgba(239, 107, 107, 0.06);
+  --color-success: #4ade80;
+  --color-info: #60a5fa;
+
+  /* ── Typography ── */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ── Shadows ── */
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-float: 0 16px 48px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-surface-0);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-surface-4); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
+
+/* ── Selection ── */
+::selection {
+  background: rgba(200, 149, 108, 0.25);
+  color: var(--color-text-primary);
+}
+
+/* ── Highlight.js override ── */
+.hljs {
+  background: var(--color-surface-1) !important;
+  color: var(--color-text-primary) !important;
+  padding: 1.25rem !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.7 !important;
+}
+
+/* ── Markdown Prose ── */
+.markdown-body {
+  line-height: 1.8;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+}
+.markdown-body p { margin-bottom: 0.875em; }
+.markdown-body p:last-child { margin-bottom: 0; }
+.markdown-body ul, .markdown-body ol { padding-left: 1.75em; margin-bottom: 0.875em; }
+.markdown-body li { margin-bottom: 0.35em; }
+.markdown-body li::marker { color: var(--color-text-tertiary); }
+.markdown-body h1, .markdown-body h2, .markdown-body h3,
+.markdown-body h4, .markdown-body h5, .markdown-body h6 {
+  font-family: var(--font-sans);
+  font-weight: 650;
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+.markdown-body h1 { font-size: 1.5em; }
+.markdown-body h2 { font-size: 1.25em; }
+.markdown-body h3 { font-size: 1.1em; }
+.markdown-body blockquote {
+  border-left: 2px solid var(--color-accent-dim);
+  padding-left: 1.125em;
+  margin: 1em 0;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+.markdown-body table { border-collapse: collapse; margin: 1em 0; width: 100%; font-size: 0.875rem; }
+.markdown-body th, .markdown-body td {
+  border: 1px solid var(--color-border);
+  padding: 0.625em 1em;
+  text-align: left;
+}
+.markdown-body th {
+  background: var(--color-surface-3);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+}
+.markdown-body hr { border: none; border-top: 1px solid var(--color-border); margin: 1.5em 0; }
+.markdown-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-accent-dim);
+  transition: text-decoration-color 0.15s;
+}
+.markdown-body a:hover { text-decoration-color: var(--color-accent); }
+.markdown-body code:not(pre code) {
+  background: var(--color-surface-3);
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.825em;
+  color: var(--color-accent);
+  border: 1px solid var(--color-border-subtle);
+}
+.markdown-body img { max-width: 100%; border-radius: 12px; }
+.markdown-body strong { font-weight: 650; color: var(--color-text-primary); }
+
+/* ── KaTeX math rendering ── */
+.markdown-body .katex-display {
+  margin: 1em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.75em 1em;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border: 1px solid var(--color-border-subtle);
+}
+.markdown-body .katex { color: var(--color-text-primary); font-size: 1.05em; }
+.markdown-body .katex-display > .katex { font-size: 1.15em; }
+.markdown-body .katex .mord,
+.markdown-body .katex .mbin,
+.markdown-body .katex .mrel,
+.markdown-body .katex .mopen,
+.markdown-body .katex .mclose,
+.markdown-body .katex .mpunct,
+.markdown-body .katex .minner { color: var(--color-text-primary); }
+
+/* KaTeX error fallback — show as muted text instead of red */
+.markdown-body .katex-error {
+  color: var(--color-text-secondary) !important;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-surface-3);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--color-border-subtle);
+}
+/* Inline math spacing */
+.markdown-body .katex:not(.katex-display .katex) {
+  padding: 0 0.1em;
+}
+
+/* ── Quiz inline math — keep markdown compact ── */
+.quiz-math .markdown-body {
+  line-height: 1.5;
+}
+.quiz-math .markdown-body p {
+  margin-bottom: 0;
+  display: inline;
+}
+.quiz-math .markdown-body .katex-display {
+  margin: 0.5em 0;
+  padding: 0.4em 0.6em;
+}
+
+/* ── Animations ── */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.typing-cursor::after {
+  content: '\25AE';
+  animation: blink 1s step-end infinite;
+  color: var(--color-accent);
+  margin-left: 2px;
+  font-size: 0.85em;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.animate-slide-in {
+  animation: slideInLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-slide-down {
+  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseDot {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.7); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--color-surface-2) 25%, var(--color-surface-3) 50%, var(--color-surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── Voice Call Animations ── */
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(200, 149, 108, 0.3); }
+  70% { box-shadow: 0 0 0 8px rgba(200, 149, 108, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(200, 149, 108, 0); }
+}
+.animate-pulse-ring {
+  animation: pulseRing 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.animate-glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.animate-shimmer-text {
+  background: linear-gradient(90deg, var(--color-text-secondary) 25%, var(--color-accent) 50%, var(--color-text-secondary) 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2s ease-in-out infinite;
+}
