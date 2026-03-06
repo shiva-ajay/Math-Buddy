@@ -4,18 +4,17 @@ import { messages } from '../db/schema.js'
 import { eq, asc } from 'drizzle-orm'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ message: 'Method not allowed' })
-  }
-
-  const { conversationId } = req.query
-  if (!conversationId || typeof conversationId !== 'string') {
-    return res.status(400).json({ message: 'conversationId is required' })
-  }
-
-  const db = getDb()
-
   try {
+    if (req.method !== 'GET') {
+      return res.status(405).json({ message: 'Method not allowed' })
+    }
+
+    const { conversationId } = req.query
+    if (!conversationId || typeof conversationId !== 'string') {
+      return res.status(400).json({ message: 'conversationId is required' })
+    }
+
+    const db = getDb()
     const result = await db
       .select()
       .from(messages)
@@ -23,7 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .orderBy(asc(messages.created_at))
     return res.json({ messages: result })
   } catch (error) {
-    console.error('Error fetching messages:', error)
-    return res.status(500).json({ message: 'Failed to fetch messages' })
+    console.error('API error:', error)
+    return res.status(500).json({ message: error instanceof Error ? error.message : 'Internal server error' })
   }
 }

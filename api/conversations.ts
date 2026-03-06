@@ -4,23 +4,18 @@ import { conversations } from '../db/schema.js'
 import { desc } from 'drizzle-orm'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const db = getDb()
+  try {
+    const db = getDb()
 
-  if (req.method === 'GET') {
-    try {
+    if (req.method === 'GET') {
       const result = await db
         .select()
         .from(conversations)
         .orderBy(desc(conversations.updated_at))
       return res.json({ conversations: result })
-    } catch (error) {
-      console.error('Error fetching conversations:', error)
-      return res.status(500).json({ message: 'Failed to fetch conversations' })
     }
-  }
 
-  if (req.method === 'POST') {
-    try {
+    if (req.method === 'POST') {
       const { title, model, system_prompt } = req.body || {}
       const result = await db
         .insert(conversations)
@@ -31,11 +26,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         })
         .returning()
       return res.json({ conversation: result[0] })
-    } catch (error) {
-      console.error('Error creating conversation:', error)
-      return res.status(500).json({ message: 'Failed to create conversation' })
     }
-  }
 
-  return res.status(405).json({ message: 'Method not allowed' })
+    return res.status(405).json({ message: 'Method not allowed' })
+  } catch (error) {
+    console.error('API error:', error)
+    return res.status(500).json({ message: error instanceof Error ? error.message : 'Internal server error' })
+  }
 }
